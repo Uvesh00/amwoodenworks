@@ -1528,7 +1528,7 @@ footer::before {
         <label for="requirement">Your Requirement</label>
         <textarea id="requirement" placeholder="Tell us about your requirement — dimensions, quantity, wood type, finish, timeline..."></textarea>
       </div>
-      <button class="btn-submit" onclick="handleSubmit(event)">Send Enquiry</button>
+      <button class="btn-submit" type="submit" onclick="handleSubmit(event)">Send Enquiry</button>
     </div>
   </div>
 </section>
@@ -1687,12 +1687,48 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 function handleSubmit(e) {
   e.preventDefault();
   const btn = e.target;
+
+  // Get form values
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
+  const product = document.getElementById('product').value;
+  const requirement = document.getElementById('requirement').value;
+
+  // Basic validation
+  if (!name || !phone) {
+    alert("Please fill Name and Phone Number");
+    return;
+  }
+
+  // Button animation
   btn.textContent = '✓ Enquiry Sent!';
   btn.style.background = '#25A040';
+
+  // WhatsApp number 
+  const whatsappNumber = "919724309186"; 
+
+  // Message
+  const message = `Hello, I have an enquiry:
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Product: ${product}
+Requirement: ${requirement}`;
+
+  const encodedMessage = encodeURIComponent(message);
+
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+  // Animation
   setTimeout(() => {
+    window.open(whatsappURL, "_blank");
+
+    // Reset button
     btn.textContent = 'Send Enquiry';
     btn.style.background = '';
-  }, 3000);
+  }, 1000);
 }
 
 // --- Smooth parallax on hero ---
@@ -1705,6 +1741,32 @@ window.addEventListener('scroll', () => {
     heroContent.style.opacity = 1 - (s / (window.innerHeight * 0.7));
   }
 });
+
+// --- WhatsApp Form --- //
+// WhatsApp number (IMPORTANT: country code without +)
+  const whatsappNumber = "919724309186"; // 👉 apna ya client ka number daal
+
+  // Message format
+  const message = `Hello, I have an enquiry:
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Product: ${product}
+Requirement: ${requirement}`;
+
+  // Encode message for URL
+  const encodedMessage = encodeURIComponent(message);
+
+  // WhatsApp URL
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+  // Redirect to WhatsApp
+  window.open(whatsappURL, "_blank");
+
+
+
 </script>
+
 </body>
 </html>
